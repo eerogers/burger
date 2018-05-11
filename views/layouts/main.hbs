@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Burgers</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+    crossorigin="anonymous">
+<style>
+body {
+    background-color: plum;
+}
+h2 {
+  text-align: center;
+}
+#input {
+  margin: 150px 0px 0px 0px;
+}
+</style>
+</head>
+<body>
+  {{{ body }}}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+
+$.get('/burgers/uneaten').then(function(r){
+  console.log(r)
+})
+$.get('/burgers/eaten').then(function(r){
+  console.log(r)
+})
+
+$("#submit").on("click", function(){
+    var newB = $("#newBurger").val()
+    var newEntry = {
+      burger: newB
+    }
+    console.log(newEntry)
+    $("#newBurger").val("")
+
+    $.post('/burgers', newEntry)
+    .then(function(data) {
+      console.log(data)
+    })
+})
+</script>
+</body>
+</html>
