@@ -12,11 +12,12 @@ var orm = {
             console.log(results);
         });
     },
-    selectWhere: function (colName, value) {
+    selectWhere: function (colName, value, cb) {
         connection.query('SELECT * FROM burgers WHERE ?? =?', [colName, value], function (error, results, fields) {
             if (error) throw error;
-            console.log(results);
-        });
+            cb(results)
+            console.log(results); //this is where the results are seemingly stuck
+        })
     },
     deleteWhere: function (tabName, colName, value) {
         connection.query('SELECT * FROM ?? WHERE ?? =?', [tabName, colName, value], function (error, results, fields) {

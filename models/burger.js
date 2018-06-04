@@ -8,7 +8,8 @@ var burgers = {
   specificBurger: function (colName, value) {
     orm.selectWhere(colName, value, function(r) {
       return r
-    })
+    //  console.log(r)
+  });
   },
   createBurger: function (value) {
   //  console.log(value)
