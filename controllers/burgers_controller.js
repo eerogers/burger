@@ -6,7 +6,6 @@ console.log(Burgers)
 //routes go in here
 //THE ROUTER HAS TO BE THE PROBLEM
 var router = express.Router()
-
 router.post('/burgers', function(req, res) {
   //  console.log(req.body)
     Burgers.createBurger({
