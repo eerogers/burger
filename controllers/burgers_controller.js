@@ -1,36 +1,39 @@
-var express = require("express");
+var Burgers = require("../models/burger.js")
+var express = require('express');
 var app = express()
-var Burger = require("../models/burger.js")
 var eaten = {}
+console.log(Burgers)
 //routes go in here
+//THE ROUTER HAS TO BE THE PROBLEM
 var router = express.Router()
 
 router.post('/burgers', function(req, res) {
   //  console.log(req.body)
-    Burger.createBurger({
+    Burgers.createBurger({
         burger_name: req.body.burger,
         devoured: false
     })
 })
-router.get('/burgers/uneaten', function(req, res) {    
-    var uneatenBurger = Burger.specificBurger("devoured", false)
-    console.log("data equals", uneatenBurger) //<-- this is undefined
-    res.render('index', {uneatenBurger: uneatenBurger})
-})
+//router.get('/burgers/uneaten', function(req, res) {    
+//    var newBurger = Burgers.specificBurger("devoured", false)
+//    console.log("data equals", newBurger) //<-- this is undefined
+//    res.send({"uneatenBurger": newBurger})
+//});
    // res.render('index', {burger: burger})
-router.get('/burgers/eaten', function(req, res) {
-    var thisthing = { 
-        thing: "thisISRIGHT"
-    }  
+//router.get('/burgers/eaten', function(req, res) {
+//    var thisthing = { 
+//        thing: "thisISRIGHT"
+//    }  
    // app.get("/", function(req, res) {
-    res.render('index', thisthing)
+//    var eatenBurger = Burgers.specificBurger("devoured", true)
+//    res.send({"eatenBurger": thisthing})
    // });
-    var eatenBurger = Burger.specificBurger("devoured", true)
   //  res.render('index', {eatenBurger: eatenBurger})
-});
+///});
 
-router.get('/burgers/:tab/:col', function(req, res) {    
-    var burger = Burger.allBurgers()
+router.post('/burgers/update', function(req, res) { 
+    console.log(req.body)   
+    Burgers.updateBurger("burgers", "devoured", true, "id", req.body.id)
  //   res.render('index', {burger: burger})
 });
 

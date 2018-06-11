@@ -1,34 +1,21 @@
+$(document).ready(function() {
 function displayUneaten(){
   $("#uneaten").empty()
     $.get('/burgers/uneaten', function(data){
       console.log(data)
       for(i=0; i<data.length; i++){
-      //  console.log(data[i])
-        $("#uneaten").append("<div id='uneaten-data data='un"+i+"'>"+data[i].burger_name+"</div><button>Eat</button>")
+        console.log(data[i])
+        $("#uneaten").append("<div id='uneaten-data' data='"+data[i].id+"'>"+data[i].burger_name+"</div><button class='new' id='"+data[i].id+"'>Eat</button>")
       }
     })
 } displayUneaten()
 
-function displayEaten(){
-//   $.ajax({ url: "/burgers/eaten",
-//     cache: false,
-//     contentType: "application/json; charset=utf-8",
-//     dataType: "json",
-//     type: "GET",
-//     success: function (result) {
-//  alert(result);
-//     },
-//     error: function (xhr, ajaxOptions, thrownError) {
-//  alert("Error: " + thrownError);
-//     }
-// });
-  
-  
+function displayEaten(){  
+  $("#eaten").empty()
   $.get('/burgers/eaten', function(data){
     console.log(data)
-    $("#eaten").empty()
     for(i=0; i<data.length; i++){
-      $("#eaten").append("<div id='eaten-data' data='eat"+i+"'>"+data[i].burger_name+"</div>")
+      $("#eaten").append("<div id='eaten-data'>"+data[i].burger_name+"</div>")
     }
   })
 } displayEaten()
@@ -47,4 +34,18 @@ $("#submit").on("click", function(){
     })
    displayUneaten()
    displayEaten()
+})
+
+$('#uneaten').on("click", '.new', function(){
+  console.log("click")
+  var eatenId = $(this).attr("id")
+  var update = {
+    id: eatenId
+  }
+  $.post('/burgers/update', update)
+  .then(function(data) {
+    console.log(data)
+  })
+  window.location.href ="/"
+})
 })
